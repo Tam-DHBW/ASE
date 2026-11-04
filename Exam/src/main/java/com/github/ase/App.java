@@ -16,7 +16,7 @@ public class App extends Application {
         BoardModel model = null; // TODO: replace null with your BoardModel implementation
 
         MainMenuView mainMenu = new MainMenuView(model);
-        mainMenu.show(stage);
+         mainMenu.show(stage);
     }
 
     public static void main(String[] args) {
