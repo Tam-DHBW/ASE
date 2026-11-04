@@ -1,5 +1,9 @@
 package com.github.ase;
 
+import com.github.ase.impl.MatchBoardModel;
+import com.github.ase.impl.match.TurnBased2PMatch;
+import com.github.ase.impl.ruleset.checkers.CheckersRuleset;
+import com.github.ase.impl.ruleset.checkers.piece.StaticCheckersPieceFactory;
 import com.github.ase.ui.widgets.MainMenuView;
 
 import javafx.application.Application;
@@ -13,7 +17,10 @@ public class App extends Application {
         // Create an instance of YOUR BoardModel implementation here, e.g.:
         //     BoardModel model = new MyBoardModel();
         // Until you do, the app compiles but fails as soon as you start a game.
-        BoardModel model = null; // TODO: replace null with your BoardModel implementation
+        BoardModel model = new MatchBoardModel(game -> switch (game) {
+            case CHECKERS -> new TurnBased2PMatch<>(new CheckersRuleset(new StaticCheckersPieceFactory()));
+            case null, default -> null;
+        }); // TODO: replace null with your BoardModel implementation
 
         MainMenuView mainMenu = new MainMenuView(model);
          mainMenu.show(stage);
