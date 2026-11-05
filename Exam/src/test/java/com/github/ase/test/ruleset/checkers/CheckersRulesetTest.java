@@ -58,7 +58,7 @@ public class CheckersRulesetTest {
             Optional.empty()
         ));
 
-        assertEquals("lM B1 -> A0", ruleset.getTurnLabel(turn));
+        assertEquals("lM B7 -> A8", ruleset.getTurnLabel(turn));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class CheckersRulesetTest {
             Optional.of(pieceFactory.createPiece(Color.BLACK, false, 0, 0))
         ));
 
-        assertEquals("lM C2 X dM A0", ruleset.getTurnLabel(turn));
+        assertEquals("lM C6 X dM A8", ruleset.getTurnLabel(turn));
     }
 
     @Test

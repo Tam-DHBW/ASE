@@ -65,7 +65,7 @@ public class CheckersRuleset implements Ruleset<CheckersPiece> {
     }
 
     private String formatPosition(int row, int col) {
-        return "%c%d".formatted((char) ((int) 'A' + col), row);
+        return "%c%d".formatted((char) ((int) 'A' + col), BoardModel.SIZE - row);
     }
 
     @Override
