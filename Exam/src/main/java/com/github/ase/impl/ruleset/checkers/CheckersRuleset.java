@@ -2,6 +2,7 @@ package com.github.ase.impl.ruleset.checkers;
 
 import com.github.ase.BoardModel;
 import com.github.ase.impl.Color;
+import com.github.ase.impl.match.history.Turn;
 import com.github.ase.impl.ruleset.Ruleset;
 import com.github.ase.impl.ruleset.checkers.piece.CheckersPiece;
 import com.github.ase.impl.ruleset.checkers.piece.CheckersPieceFactory;
@@ -37,5 +38,10 @@ public class CheckersRuleset implements Ruleset<CheckersPiece> {
                     )
                 )
         ).filter(piece -> (piece.getRow() + piece.getCol()) % 2 != 0).toList();
+    }
+
+    @Override
+    public String getTurnLabel(Turn<CheckersPiece> turn) {
+        return turn.getPiece().getCode();
     }
 }

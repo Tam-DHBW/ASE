@@ -2,7 +2,9 @@ package com.github.ase;
 
 import com.github.ase.impl.MatchBoardModel;
 import com.github.ase.impl.match.TurnBased2PMatch;
+import com.github.ase.impl.match.history.ArrayListTurnHistoryManagerFactory;
 import com.github.ase.impl.ruleset.checkers.CheckersRuleset;
+import com.github.ase.impl.ruleset.checkers.piece.CheckersPiece;
 import com.github.ase.impl.ruleset.checkers.piece.StaticCheckersPieceFactory;
 import com.github.ase.ui.widgets.MainMenuView;
 
@@ -18,7 +20,10 @@ public class App extends Application {
         //     BoardModel model = new MyBoardModel();
         // Until you do, the app compiles but fails as soon as you start a game.
         BoardModel model = new MatchBoardModel(game -> switch (game) {
-            case CHECKERS -> new TurnBased2PMatch<>(new CheckersRuleset(StaticCheckersPieceFactory.getInstance()));
+            case CHECKERS -> new TurnBased2PMatch<>(
+                new CheckersRuleset(StaticCheckersPieceFactory.getInstance()),
+                new ArrayListTurnHistoryManagerFactory<CheckersPiece>().createTurnHistoryManager()
+            );
             case null, default -> null;
         }); // TODO: replace null with your BoardModel implementation
 

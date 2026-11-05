@@ -9,4 +9,5 @@ module com.github.ase {
     exports com.github.ase.impl.ruleset;
     exports com.github.ase.impl.ruleset.checkers;
     exports com.github.ase.impl.ruleset.checkers.piece;
+    exports com.github.ase.impl.match.history;
 }

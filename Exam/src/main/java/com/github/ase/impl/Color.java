@@ -4,12 +4,19 @@ public enum Color {
     BLACK("Black"),
     WHITE("White");
 
-    private final String displayName;
-    Color(String displayName) {
-        this.displayName = displayName;
+    private final String titleCaseName;
+    Color(String titleCaseName) {
+        this.titleCaseName = titleCaseName;
     }
 
     public String getNameTitleCase() {
-        return displayName;
+        return titleCaseName;
+    }
+
+    public Color getOpponent() {
+        return switch (this) {
+            case BLACK -> WHITE;
+            case WHITE -> BLACK;
+        };
     }
 }

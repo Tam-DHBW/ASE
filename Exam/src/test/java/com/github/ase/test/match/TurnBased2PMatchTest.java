@@ -2,6 +2,8 @@ package com.github.ase.test.match;
 
 import com.github.ase.impl.Color;
 import com.github.ase.impl.match.TurnBased2PMatch;
+import com.github.ase.impl.match.history.ArrayListTurnHistoryManagerFactory;
+import com.github.ase.impl.match.history.Turn;
 import com.github.ase.impl.ruleset.Piece;
 import com.github.ase.impl.ruleset.Ruleset;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +29,10 @@ public class TurnBased2PMatchTest {
      */
     @BeforeEach
     public void init() {
-        match = new TurnBased2PMatch<>(new TestRuleset());
+        match = new TurnBased2PMatch<>(
+            new TestRuleset(),
+            new ArrayListTurnHistoryManagerFactory<TestPiece>().createTurnHistoryManager()
+        );
     }
 
     @Test
@@ -98,6 +103,41 @@ public class TurnBased2PMatchTest {
         assertNull(match.pieceAt(2, 1));
     }
 
+    @Test
+    public void testMoveList() {
+        match.onCellClick(2, 1);
+        match.onCellClick(1, 1);
+
+        match.onCellClick(0, 1);
+        match.onCellClick(1, 1);
+
+        match.onCellClick(2, 2);
+        match.onCellClick(1, 2);
+
+        List<String> moves = match.moves();
+        assertEquals("#1 test label w", moves.get(0));
+        assertEquals("#2 test label b", moves.get(1));
+        assertEquals("#3 test label w", moves.get(2));
+        assertEquals(3, moves.size());
+
+        match.onSelectMove("#1 test label w");
+
+        moves = match.moves();
+        assertEquals("#1 test label w", moves.get(0));
+        assertEquals("#2 test label b", moves.get(1));
+        assertEquals("#3 test label w", moves.get(2));
+        assertEquals(3, moves.size());
+        assertEquals("Black", match.currentPlayer());
+
+        match.onCellClick(0, 2);
+        match.onCellClick(1, 2);
+
+        moves = match.moves();
+        assertEquals("#1 test label w", moves.get(0));
+        assertEquals("#2 test label b", moves.get(1));
+        assertEquals(2, moves.size());
+    }
+
     /**
      * Small concrete implementation is easier than mocking move logic
      */
@@ -115,6 +155,11 @@ public class TurnBased2PMatchTest {
                 pieceW1,
                 pieceW2
             );
+        }
+
+        @Override
+        public String getTurnLabel(Turn<TestPiece> turn) {
+            return "test label " + turn.getPiece().getCode();
         }
     }
 
