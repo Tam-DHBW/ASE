@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CheckersPieceTest {
-    CheckersPieceFactory factory = new StaticCheckersPieceFactory();
+    CheckersPieceFactory factory = StaticCheckersPieceFactory.getInstance();
 
     @Test
     public void testCode() {

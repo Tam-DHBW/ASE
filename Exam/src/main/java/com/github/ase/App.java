@@ -18,7 +18,7 @@ public class App extends Application {
         //     BoardModel model = new MyBoardModel();
         // Until you do, the app compiles but fails as soon as you start a game.
         BoardModel model = new MatchBoardModel(game -> switch (game) {
-            case CHECKERS -> new TurnBased2PMatch<>(new CheckersRuleset(new StaticCheckersPieceFactory()));
+            case CHECKERS -> new TurnBased2PMatch<>(new CheckersRuleset(StaticCheckersPieceFactory.getInstance()));
             case null, default -> null;
         }); // TODO: replace null with your BoardModel implementation
 

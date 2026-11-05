@@ -8,6 +8,10 @@ public class StaticCheckersPieceFactory implements CheckersPieceFactory {
     private static final CheckersPieceType lightManType = new CheckersPieceType(Color.WHITE, false);
     private static final CheckersPieceType lightKingType = new CheckersPieceType(Color.WHITE, true);
 
+    private static StaticCheckersPieceFactory INSTANCE = null;
+
+    private StaticCheckersPieceFactory() {}
+
     public CheckersPiece createPiece(
         Color color,
         boolean king,
@@ -20,5 +24,9 @@ public class StaticCheckersPieceFactory implements CheckersPieceFactory {
         };
 
         return new CheckersPiece(type, row, col, this);
+    }
+
+    public static StaticCheckersPieceFactory getInstance() {
+        return INSTANCE == null ? INSTANCE = new StaticCheckersPieceFactory() : INSTANCE;
     }
 }

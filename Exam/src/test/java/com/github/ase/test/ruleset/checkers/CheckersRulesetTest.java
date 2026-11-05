@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CheckersRulesetTest {
     @Test
     public void testInitialBoard() {
-        CheckersRuleset ruleset = new CheckersRuleset(new StaticCheckersPieceFactory());
+        CheckersRuleset ruleset = new CheckersRuleset(StaticCheckersPieceFactory.getInstance());
         Collection<CheckersPiece> initialBoard = ruleset.getInitialBoard();
 
         assertEquals(24, initialBoard.size());
