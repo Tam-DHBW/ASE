@@ -7,5 +7,6 @@ module com.github.ase {
     exports com.github.ase.impl;
     exports com.github.ase.impl.match;
     exports com.github.ase.impl.ruleset;
-    exports com.github.ase.impl.ruleset.chess;
+    exports com.github.ase.impl.ruleset.checkers;
+    exports com.github.ase.impl.ruleset.checkers.piece;
 }
