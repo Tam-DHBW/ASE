@@ -44,6 +44,8 @@ public class TurnBased2PMatch<P extends Piece<P>> implements Match {
 
     @Override
     public boolean isCellHighlighted(int row, int col) {
+        if (this.ruleset.gameEnded(this.pieces)) return false;
+
         return this.selectedPiece.map(piece ->
             piece
                 .getValidMoves(this.pieces)
@@ -54,6 +56,8 @@ public class TurnBased2PMatch<P extends Piece<P>> implements Match {
 
     @Override
     public void onCellClick(int row, int col) {
+        if (this.ruleset.gameEnded(this.pieces)) return;
+
         Optional<P> clickedPiece = this.pieces.stream()
             .filter(piece -> piece.getRow() == row && piece.getCol() == col)
             .findFirst();
@@ -115,7 +119,8 @@ public class TurnBased2PMatch<P extends Piece<P>> implements Match {
 
     @Override
     public String getStatus() {
-        // TODO also test
-        return "";
+        List<Turn<P>> turns = this.turnHistoryManager.getTurns();
+        if (!turns.isEmpty()) return this.ruleset.getStatus(turns.getLast());
+        else return "";
     }
 }

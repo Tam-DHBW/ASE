@@ -1,6 +1,7 @@
 package com.github.ase.test.match;
 
 import com.github.ase.impl.Color;
+import com.github.ase.impl.match.Match;
 import com.github.ase.impl.match.TurnBased2PMatch;
 import com.github.ase.impl.match.history.ArrayListTurnHistoryManagerFactory;
 import com.github.ase.impl.match.history.Turn;
@@ -15,7 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TurnBased2PMatchTest {
-    private TurnBased2PMatch<TestPiece> match;
+    private Match match;
 
     /**
      * 0 1 2 3 .
@@ -26,6 +27,7 @@ public class TurnBased2PMatchTest {
      * .
      * Vertical moves only. Black moves +1, White moves -1.
      * Captures destination.
+     * Ends when white is eliminated.
      */
     @BeforeEach
     public void init() {
@@ -138,6 +140,33 @@ public class TurnBased2PMatchTest {
         assertEquals(2, moves.size());
     }
 
+    @Test
+    public void testStatus() {
+        assertEquals("", match.getStatus());
+
+        match.onCellClick(2, 1);
+        match.onCellClick(1, 1);
+
+        assertEquals("test status w", match.getStatus());
+    }
+
+    @Test
+    public void testHonorGameEnd() {
+        match.onCellClick(2, 1);
+        match.onCellClick(1, 1);
+        match.onCellClick(0, 1);
+        match.onCellClick(1, 1);
+        match.onCellClick(2, 2);
+        match.onCellClick(1, 2);
+
+        match.onCellClick(0, 2);
+        assertTrue(match.isCellHighlighted(1, 2));
+        match.onCellClick(1, 2);
+
+        match.onCellClick(1, 2);
+        assertFalse(match.isCellHighlighted(2, 2));
+    }
+
     /**
      * Small concrete implementation is easier than mocking move logic
      */
@@ -160,6 +189,16 @@ public class TurnBased2PMatchTest {
         @Override
         public String getTurnLabel(Turn<TestPiece> turn) {
             return "test label " + turn.getPiece().getCode();
+        }
+
+        @Override
+        public String getStatus(Turn<TestPiece> turn) {
+            return "test status " + turn.getPiece().getCode();
+        }
+
+        @Override
+        public boolean gameEnded(Collection<TestPiece> pieces) {
+            return pieces.stream().noneMatch(piece -> piece.color() == Color.WHITE);
         }
     }
 

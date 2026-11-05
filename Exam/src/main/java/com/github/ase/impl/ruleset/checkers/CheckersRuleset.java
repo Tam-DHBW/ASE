@@ -8,6 +8,9 @@ import com.github.ase.impl.ruleset.checkers.piece.CheckersPiece;
 import com.github.ase.impl.ruleset.checkers.piece.CheckersPieceFactory;
 
 import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -42,6 +45,37 @@ public class CheckersRuleset implements Ruleset<CheckersPiece> {
 
     @Override
     public String getTurnLabel(Turn<CheckersPiece> turn) {
-        return turn.getPiece().getCode();
+        return turn.getMove().takes().map(takes -> "%s %s X %s %s".formatted(
+            turn.getPiece().getCode(),
+            formatPosition(turn.getPiece().getRow(), turn.getPiece().getCol()),
+            takes.getCode(),
+            formatPosition(takes.getRow(), takes.getCol())
+        )).orElseGet(() -> "%s %s -> %s".formatted(
+            turn.getPiece().getCode(),
+            formatPosition(turn.getPiece().getRow(), turn.getPiece().getCol()),
+            formatPosition(turn.getMove().replacement().getRow(), turn.getMove().replacement().getCol())
+        ));
+    }
+
+    @Override
+    public String getStatus(Turn<CheckersPiece> turn) {
+        return getWinner(turn.getPiecesSnapshot()).map(winner ->
+            "%s has won!".formatted(winner.getNameTitleCase())
+        ).orElse("");
+    }
+
+    private String formatPosition(int row, int col) {
+        return "%c%d".formatted((char) ((int) 'A' + col), row);
+    }
+
+    @Override
+    public boolean gameEnded(Collection<CheckersPiece> pieces) {
+        return getWinner(pieces).isPresent();
+    }
+
+    private Optional<Color> getWinner(Collection<CheckersPiece> pieces) {
+        Set<Color> remainingColors = pieces.stream().map(CheckersPiece::getColor).collect(Collectors.toSet());
+        if (remainingColors.size() == 1) return Optional.of(remainingColors.iterator().next());
+        else return Optional.empty();
     }
 }

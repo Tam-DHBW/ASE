@@ -7,4 +7,6 @@ import java.util.Collection;
 public interface Ruleset<P extends Piece<P>> {
     Collection<P> getInitialBoard();
     String getTurnLabel(Turn<P> turn);
+    String getStatus(Turn<P> turn);
+    boolean gameEnded(Collection<P> pieces);
 }
