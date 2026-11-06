@@ -101,6 +101,7 @@ public class TurnBased2PMatch<P extends Piece<P>> implements Match {
                 Turn<P> turn = turnEntry.getValue().selectTurn();
                 this.currentPlayer = turn.getPiece().getColor().getOpponent();
                 this.pieces = new ArrayList<>(turn.getPiecesSnapshot());
+                this.selectedPiece = Optional.empty();
             });
     }
 
