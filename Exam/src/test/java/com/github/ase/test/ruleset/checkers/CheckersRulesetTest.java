@@ -86,7 +86,7 @@ public class CheckersRulesetTest {
         when(turn2.getPiecesSnapshot()).thenReturn(List.of(
             pieceFactory.createPiece(Color.BLACK, false, 2, 2)
         ));
-        assertEquals("Black has won!", ruleset.getStatus(turn2));
+        assertEquals("Black has defeated White at checkers!", ruleset.getStatus(turn2));
     }
 
     @Test
