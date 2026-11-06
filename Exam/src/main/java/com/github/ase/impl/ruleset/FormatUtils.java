@@ -4,6 +4,8 @@ import com.github.ase.BoardModel;
 import com.github.ase.impl.match.history.Turn;
 
 public class FormatUtils {
+    private FormatUtils() {}
+
     public static String formatTurnLabel(Turn<?> turn) {
         return turn.getMove().takes().map(takes -> "%s %s X %s %s".formatted(
             turn.getPiece().getCode(),
@@ -16,6 +18,7 @@ public class FormatUtils {
             formatPosition(turn.getMove().replacement().getRow(), turn.getMove().replacement().getCol())
         ));
     }
+
     private static String formatPosition(int row, int col) {
         return "%c%d".formatted((char) ((int) 'A' + col), BoardModel.SIZE - row);
     }
