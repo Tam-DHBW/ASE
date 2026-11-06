@@ -5,7 +5,7 @@ import com.github.ase.impl.Color;
 import java.util.Collection;
 import java.util.stream.IntStream;
 
-public class KingPieceType extends ChessPieceType {
+class KingPieceType extends ChessPieceType {
     protected KingPieceType(Color color, ChessPieceFactory factory) {
         super(color, factory);
     }

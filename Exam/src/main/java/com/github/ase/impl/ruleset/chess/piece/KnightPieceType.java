@@ -5,7 +5,7 @@ import com.github.ase.impl.Color;
 import java.util.Collection;
 import java.util.List;
 
-public class KnightPieceType extends ChessPieceType {
+class KnightPieceType extends ChessPieceType {
     protected KnightPieceType(Color color, ChessPieceFactory factory) {
         super(color, factory);
     }
