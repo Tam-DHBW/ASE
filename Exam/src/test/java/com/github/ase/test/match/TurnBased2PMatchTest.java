@@ -19,7 +19,7 @@ public class TurnBased2PMatchTest {
     private Match match;
 
     /**
-     * 0 1 2 3 .
+     * . 0 1 2 3 .
      * 0   b b
      * 1
      * 2   w w
@@ -87,6 +87,14 @@ public class TurnBased2PMatchTest {
         match.onCellClick(2, 1);
         match.onCellClick(2, 2);
         assertEquals("w", match.pieceAt(2, 1));
+        assertEquals("White", match.currentPlayer());
+
+        match.onCellClick(2, 1);
+        match.onCellClick(1, 2);
+        assertEquals("w", match.pieceAt(2, 1));
+        assertEquals("White", match.currentPlayer());
+
+        match.onCellClick(6, 6);
         assertEquals("White", match.currentPlayer());
     }
 

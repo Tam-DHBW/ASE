@@ -68,7 +68,8 @@ public class TurnBased2PMatch<P extends Piece<P>> implements Match {
         else {
             P selectedPiece = this.selectedPiece.get();
             selectedPiece.getValidMoves(this.pieces).stream()
-                .filter(validMove -> validMove.replacement().getRow() == row && validMove.replacement().getCol() == col)
+                .filter(validMove -> validMove.replacement().getRow() == row)
+                .filter(validMove -> validMove.replacement().getCol() == col)
                 .findFirst()
                 .ifPresent(move -> this.performMove(selectedPiece, move));
 
