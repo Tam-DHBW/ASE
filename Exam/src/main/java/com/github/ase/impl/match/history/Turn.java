@@ -1,6 +1,5 @@
 package com.github.ase.impl.match.history;
 
-import com.github.ase.impl.Color;
 import com.github.ase.impl.ruleset.Piece;
 
 import java.util.Collection;

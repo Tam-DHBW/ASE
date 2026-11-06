@@ -6,7 +6,6 @@ import com.github.ase.impl.match.history.Turn;
 import com.github.ase.impl.match.history.TurnHistoryManager;
 import com.github.ase.impl.ruleset.Piece;
 import com.github.ase.impl.ruleset.Ruleset;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 public class TurnBased2PMatch<P extends Piece<P>> implements Match {
     private final Ruleset<P> ruleset;

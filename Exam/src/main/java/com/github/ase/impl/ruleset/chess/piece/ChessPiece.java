@@ -11,7 +11,7 @@ public class ChessPiece implements Piece<ChessPiece> {
     private final int row;
     private final int col;
 
-    protected ChessPiece(ChessPieceType type, int row, int col) {
+    ChessPiece(ChessPieceType type, int row, int col) {
         this.type = type;
         this.row = row;
         this.col = col;
@@ -24,7 +24,6 @@ public class ChessPiece implements Piece<ChessPiece> {
             case WHITE -> "w";
         } + this.type.getTypeCode();
     }
-
 
     @Override
     public Color getColor() {
@@ -65,4 +64,7 @@ public class ChessPiece implements Piece<ChessPiece> {
             .toList();
     }
 
+    public boolean isKing() {
+        return this.type instanceof KingPieceType;
+    }
 }

@@ -3,6 +3,8 @@ package com.github.ase.impl.ruleset.checkers;
 import com.github.ase.BoardModel;
 import com.github.ase.impl.Color;
 import com.github.ase.impl.match.history.Turn;
+import com.github.ase.impl.ruleset.FormatUtils;
+import com.github.ase.impl.ruleset.Piece;
 import com.github.ase.impl.ruleset.Ruleset;
 import com.github.ase.impl.ruleset.checkers.piece.CheckersPiece;
 import com.github.ase.impl.ruleset.checkers.piece.CheckersPieceFactory;
@@ -45,27 +47,17 @@ public class CheckersRuleset implements Ruleset<CheckersPiece> {
 
     @Override
     public String getTurnLabel(Turn<CheckersPiece> turn) {
-        return turn.getMove().takes().map(takes -> "%s %s X %s %s".formatted(
-            turn.getPiece().getCode(),
-            formatPosition(turn.getPiece().getRow(), turn.getPiece().getCol()),
-            takes.getCode(),
-            formatPosition(takes.getRow(), takes.getCol())
-        )).orElseGet(() -> "%s %s -> %s".formatted(
-            turn.getPiece().getCode(),
-            formatPosition(turn.getPiece().getRow(), turn.getPiece().getCol()),
-            formatPosition(turn.getMove().replacement().getRow(), turn.getMove().replacement().getCol())
-        ));
+        return FormatUtils.formatTurnLabel(turn);
     }
 
     @Override
     public String getStatus(Turn<CheckersPiece> turn) {
         return getWinner(turn.getPiecesSnapshot()).map(winner ->
-            "%s has won!".formatted(winner.getNameTitleCase())
+            "%s has defeated %s at checkers!".formatted(
+                winner.getNameTitleCase(),
+                winner.getOpponent().getNameTitleCase()
+            )
         ).orElse("");
-    }
-
-    private String formatPosition(int row, int col) {
-        return "%c%d".formatted((char) ((int) 'A' + col), BoardModel.SIZE - row);
     }
 
     @Override
@@ -74,7 +66,7 @@ public class CheckersRuleset implements Ruleset<CheckersPiece> {
     }
 
     private Optional<Color> getWinner(Collection<CheckersPiece> pieces) {
-        Set<Color> remainingColors = pieces.stream().map(CheckersPiece::getColor).collect(Collectors.toSet());
+        Set<Color> remainingColors = pieces.stream().map(Piece::getColor).collect(Collectors.toSet());
         if (remainingColors.size() == 1) return Optional.of(remainingColors.iterator().next());
         else return Optional.empty();
     }

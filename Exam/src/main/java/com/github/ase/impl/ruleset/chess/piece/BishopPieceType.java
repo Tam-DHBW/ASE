@@ -3,7 +3,6 @@ package com.github.ase.impl.ruleset.chess.piece;
 import com.github.ase.impl.Color;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Stream;
 
 class BishopPieceType extends ChessPieceType {
