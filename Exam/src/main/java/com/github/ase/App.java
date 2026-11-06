@@ -6,6 +6,9 @@ import com.github.ase.impl.match.history.ArrayListTurnHistoryManagerFactory;
 import com.github.ase.impl.ruleset.checkers.CheckersRuleset;
 import com.github.ase.impl.ruleset.checkers.piece.CheckersPiece;
 import com.github.ase.impl.ruleset.checkers.piece.StaticCheckersPieceFactory;
+import com.github.ase.impl.ruleset.chess.ChessRuleset;
+import com.github.ase.impl.ruleset.chess.piece.ChessPiece;
+import com.github.ase.impl.ruleset.chess.piece.HashMapChessPieceFactory;
 import com.github.ase.ui.widgets.MainMenuView;
 
 import javafx.application.Application;
@@ -24,7 +27,10 @@ public class App extends Application {
                 new CheckersRuleset(StaticCheckersPieceFactory.getInstance()),
                 new ArrayListTurnHistoryManagerFactory<CheckersPiece>().createTurnHistoryManager()
             );
-            case null, default -> null;
+            case CHESS -> new TurnBased2PMatch<>(
+                new ChessRuleset(new HashMapChessPieceFactory()),
+                new ArrayListTurnHistoryManagerFactory<ChessPiece>().createTurnHistoryManager()
+            );
         }); // TODO: replace null with your BoardModel implementation
 
         MainMenuView mainMenu = new MainMenuView(model);
